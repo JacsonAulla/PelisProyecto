@@ -2,6 +2,9 @@ package com.streamsutp.streamsutp.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -33,12 +36,14 @@ public class DetalleOrden {
     @JoinColumn(name = "id_orden", nullable = false)
     @ToString.Exclude // Evita recursión infinita
     @EqualsAndHashCode.Exclude // Evita recursión infinita
+    @JsonBackReference("orden-detalles")
     private Orden orden;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pelicula", nullable = false) // <--- ¡CAMBIO AQUÍ! Ahora apunta a 'id_pelicula'
     @ToString.Exclude // Evita recursión infinita
     @EqualsAndHashCode.Exclude // Evita recursión infinita
+    @JsonManagedReference("pelicula-detalles")
     private Pelicula pelicula; // <--- ¡CAMBIO AQUÍ! El tipo de objeto ahora es Pelicula
 
     private Integer cantidad;

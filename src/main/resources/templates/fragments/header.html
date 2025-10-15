@@ -62,7 +62,7 @@
                                 <li sec:authorize="hasRole('ADMIN')"><hr class="dropdown-divider"></li>
                                 <li sec:authorize="hasRole('ADMIN')"><h6 class="dropdown-header">ADMINISTRAR</h6></li>
                                 <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/usuarios/lista}">Administrar usuarios</a></li>
-                                <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/ventas}">Administrar ventas</a></li>
+                                <li sec:authorize="hasRole('ADMIN')"><a class="dropdown-item" th:href="@{/admin/ventas-ui}">Administrar ventas</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form th:action="@{/logout}" method="post" style="margin:0;">

@@ -1,10 +1,10 @@
 package com.streamsutp.streamsutp.controller;
 
-import com.streamsutp.streamsutp.model.Orden;
-import com.streamsutp.streamsutp.model.EstadoOrden; // Para el select de estados
-import com.streamsutp.streamsutp.service.OrdenService;
-import org.springframework.security.access.prepost.PreAuthorize; // Para seguridad
-import org.springframework.stereotype.Controller;
+import java.util.List;
+import java.util.Optional; // Para el select de estados
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller; // Para seguridad
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-import java.util.Optional;
+import com.streamsutp.streamsutp.model.EstadoOrden;
+import com.streamsutp.streamsutp.model.Orden;
+import com.streamsutp.streamsutp.service.OrdenService;
 
 @Controller
-@RequestMapping("/admin/ventas")
-@PreAuthorize("hasRole('ADMIN')") // ¡Importante! Solo usuarios con rol ADMIN
+// CAMBIO: Renombramos la ruta para evitar conflictos con la API REST.
+@RequestMapping("/admin/ventas-ui") 
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminVentasController {
 
     private final OrdenService ordenService;
@@ -43,7 +45,7 @@ public class AdminVentasController {
             return "admin/ventas/detalle"; // Ruta a tu plantilla de detalle
         } else {
             redirectAttributes.addFlashAttribute("error", "Orden no encontrada.");
-            return "redirect:/admin/ventas";
+            return "redirect:/admin/ventas-ui"; // Actualizamos el redirect
         }
     }
 
@@ -57,7 +59,7 @@ public class AdminVentasController {
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("error", "Error al actualizar el estado: " + e.getMessage());
         }
-        return "redirect:/admin/ventas/" + idOrden;
+        return "redirect:/admin/ventas-ui/" + idOrden;
     }
 
     @PostMapping("/eliminar/{id}")
@@ -68,6 +70,6 @@ public class AdminVentasController {
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("error", "Error al eliminar la orden: " + e.getMessage());
         }
-        return "redirect:/admin/ventas";
+        return "redirect:/admin/ventas-ui";
     }
 }

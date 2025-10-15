@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,10 +35,11 @@ public class Orden {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario", nullable = false)
     @ToString.Exclude // Evita recursión infinita en toString
     @EqualsAndHashCode.Exclude // Evita recursión infinita en equals/hashCode
+    @JsonManagedReference
     private Usuario usuario;
 
     private LocalDateTime fechaOrden;
@@ -48,13 +51,10 @@ public class Orden {
     @Enumerated(EnumType.STRING)
     private EstadoOrden estadoOrden= EstadoOrden.PENDIENTE;
 
-    //private String direccionEnvio;
-    //private String ciudadEnvio;
-    //private String codigoPostalEnvio;
-
-    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @ToString.Exclude // Evita recursión infinita en toString
     @EqualsAndHashCode.Exclude // Evita recursión infinita en equals/hashCode
+    @JsonManagedReference("orden-detalles")
     private List<DetalleOrden> detalles = new ArrayList<>();
 
     // Constructor personalizado para inicializar fecha y estado por defecto

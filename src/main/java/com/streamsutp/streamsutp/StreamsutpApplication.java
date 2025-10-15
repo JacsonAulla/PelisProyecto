@@ -11,3 +11,6 @@ public class StreamsutpApplication {
 	}
 
 }
+
+//adminLOL
+//admin2814001

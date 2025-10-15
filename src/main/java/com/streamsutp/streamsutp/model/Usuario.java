@@ -8,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity; // Importa para @EqualsAndHashCode.Exclude
@@ -77,6 +79,7 @@ public class Usuario implements UserDetails { // <--- ¡AQUÍ ES DONDE IMPLEMENT
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude // Evita recursión infinita cuando Lombok genera toString()
     @EqualsAndHashCode.Exclude // Evita recursión infinita cuando Lombok genera equals() y hashCode()
+    @JsonBackReference
     private List<Orden> ordenes = new ArrayList<>(); // Se inicializa para evitar NullPointerExceptions
 
     // --- IMPLEMENTACIÓN DE LOS MÉTODOS DE UserDetails ---
@@ -87,6 +90,7 @@ public class Usuario implements UserDetails { // <--- ¡AQUÍ ES DONDE IMPLEMENT
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonBackReference("usuario-subscripciones")
     private List<Subscripcion> subscripciones = new ArrayList<>();
 
 
