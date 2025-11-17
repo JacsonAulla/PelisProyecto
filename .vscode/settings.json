@@ -1,0 +1,10 @@
+{
+    "[java]": {
+    "editor.defaultFormatter": "redhat.java",
+    "editor.formatOnSave": true
+  },
+  "java.import.gradle.enabled": false,
+  "java.configuration.updateBuildConfiguration": "automatic",
+"java.server.launchMode": "Hybrid",
+"java.compile.nullAnalysis.mode": "automatic"
+}
